@@ -104,7 +104,7 @@ function setup() {
         port = 3000;
     }
 
-    http.listen(port, function () {
+    https.listen(port, function () {
         console.log(`Listening on port ${port}`);
     });
 }
