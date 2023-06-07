@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
+var fs = require('fs');
+var options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/socket.vni.pro.vn/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/socket.vni.pro.vn/fullchain.pem')
+};
 
-const io = require('socket.io')(http, {
+var https = require('https').createServer(options, app);
+
+
+
+const io = require('socket.io')(https, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST'],
@@ -93,7 +101,7 @@ function setup() {
 
     let port = process.env.PORT;
     if (port == null || port == '') {
-        port = 5000;
+        port = 3000;
     }
 
     http.listen(port, function () {
